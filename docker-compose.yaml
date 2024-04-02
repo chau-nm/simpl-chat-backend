@@ -1,19 +1,24 @@
 services:
+  database:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=passwordroot
+      - MYSQL_DATABASE=simple-chat
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    ports:
+      - '3306:3306'
+    volumes:
+      - /var/lib/mysql
+
   server:
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8080:8080
+      - '8080:8080'
+    volumes:
+      - ./:/app
     depends_on:
       - database
-
-  database:
-    image: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=simple-chat
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
-    ports:
-      - 3306:3306
