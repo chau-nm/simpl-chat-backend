@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Message } from './message.entity';
+import { Room } from './room.entity';
 
 @Entity()
 export class User {
@@ -25,4 +33,16 @@ export class User {
 
   @Column()
   phone: string;
+
+  @ManyToMany(() => Room, (room) => room.users)
+  rooms: Room[];
+
+  @OneToMany(() => Message, (message) => message.sender)
+  sendMessages: Message[];
+
+  @Column()
+  createAt: number;
+
+  @Column()
+  updateAt: number;
 }
