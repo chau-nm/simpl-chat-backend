@@ -17,8 +17,14 @@ export class AuthController {
     );
     if (userId !== null) {
       session.userId = userId;
-      return 'Login success';
+      return {
+        loginSuccess: true,
+        message: 'Login success',
+      };
     }
-    return 'Login fail';
+    return {
+      loginSuccess: false,
+      message: 'Login fail',
+    };
   }
 }
